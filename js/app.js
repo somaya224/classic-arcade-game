@@ -1,10 +1,10 @@
 // Enemies our player must avoid
-const Enemy = function (x, y, speed,) {
+const Enemy = function (x, y) {
   // Variables applied to each of our instances go here,
   // we've provided one for you to get started
   this.x = x;
   this.y = y;
-  this.speed = speed;
+  this.speed = 100 + Math.floor(Math.random() * 500);
   // The image/sprite for our enemies, this uses
   // a helper we've provided to easily load images
   this.sprite = 'images/enemy-bug.png';
@@ -20,15 +20,18 @@ Enemy.prototype.update = function (dt) {
   // make enemy moves in loop
   if (this.x > 705) {
     this.x = -95;
+    //incrase enemy speed
+    this.speed = this.speed = 100 + Math.floor(Math.random() * 800)
   }
 
-  // collisions logica
+  // collisions logic
   if(player.x < this.x + 50 && player.y < this.y + 60 && this.x < player.x + 50 && this.y < player.y + 60) {
     player.hearts.pop();
     player.lifes--
 
     // in case of loosing
     if (player.lifes === 0) {
+      player.score = 0;
       buildMessages(`
 
 
@@ -53,6 +56,7 @@ Enemy.prototype.render = function () {
 const Player = function (x, y, score, lifes) {
   // load image
   this.sprite = 'images/char-boy.png';
+  // this.rockBarrier = 'images/Rock.png';
   this.x = x;
   this.y = y;
   this.score = score;
@@ -61,7 +65,7 @@ const Player = function (x, y, score, lifes) {
     'images/heart.png',
     'images/heart.png',
     'images/heart.png'
-  ]
+  ];
 }
 
 // This class requires a render() method
@@ -81,7 +85,15 @@ Player.prototype.render = function () {
   }
   ctx.fillText(`LIVES:`, 475, 30);
 
+  // if(this.lifes !== 0 && this.score === 100) {
+  //   ctx.drawImage(Resources.get(this.rockBarrier), 300, 230);
+  // }
+
 };
+
+Player.prototype.getPlayerScore = function () {
+  return this.score;
+}
 
 // This class requires an update() method
 Player.prototype.update = function () {
@@ -96,6 +108,11 @@ Player.prototype.update = function () {
   if (this.y > 467) {
     this.y = 467
   }
+
+  // prevent player of step on the rock
+  // if(this.x === 300 && this.y === 227 && this.score === 100) {
+  //     this.y = 307;
+  // };
 };
 
 // This class requires a handleInput() method.
@@ -154,7 +171,7 @@ let allEnemies = [];
 const dy = [65, 145, 225, 305];
 // Place all enemy objects in an array called allEnemies
 dy.forEach(yDestination => {
-  let enemy = new Enemy(-100, yDestination,  100 + Math.floor(Math.random() * 500));
+  let enemy = new Enemy(-100, yDestination);
   allEnemies.push(enemy);
 });
 
@@ -169,8 +186,7 @@ document.addEventListener('keyup', function (e) {
     38: 'up',
     39: 'right',
     40: 'down'
-  };
-
+    }
   player.handleInput(allowedKeys[e.keyCode]);
 });
 
@@ -215,8 +231,9 @@ function buildMessages(innerText, animation) {
   if(player.lifes !== 0 && player.score !== 300) {
     setTimeout(() => {
       document.body.removeChild(messageDiv);
+      player.y = 467;
     }, 2000);
-    player.y = 467;
+
   } else if (player.score === 300 || player.lifes === 0) {
     // add play again button in case of loosing that will reset the game
     let buttn = createButton();
@@ -254,6 +271,8 @@ function fireworksAnimation() {
 function createButton () {
   const btn = document.createElement('button');
   btn.classList.add('btn');
+  btn.tabindex = -1;
+  btn.setAttribute('autofocus', true);
   btn.innerText = 'Play Again';
   return btn;
 }
