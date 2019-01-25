@@ -10,7 +10,7 @@
 This game does't need any setup, all you need is,
 * Clone the repository to your local machine or download the project
 * Open the index.html file in your browser and engjoy
-Or you can <a href="">Play the game online</a>
+Or you can <a href="https://somaya224.github.io/classic-arcade-game/">Play the game online</a>
 
 ## Games Rules? ##
 * Lead your hero to the water area without colliding with the enemies (bugs).
