@@ -29,3 +29,5 @@ Or you can <a href="https://somaya224.github.io/classic-arcade-game/">Play the g
     * A key moves the player left.
     * S key moves the player down.
     * D key moves the player right.
+## Animation ##
+Fireworks by https://jsfiddle.net/elin/7m3bL/
