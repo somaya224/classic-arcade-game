@@ -23,7 +23,7 @@ Or you can <a href="">Play the game online</a>
     * UP arrow moves the player up.
     * LEFT arrow moves the player left.
     * DOWN arrow moves the player down.
-    8 RIGHT arrow moves the player right.
+    * RIGHT arrow moves the player right.
 * If you are left handed you can yous these alternative keys,
     * W key moves the player up.
     * A key moves the player left.
